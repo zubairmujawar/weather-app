@@ -1,38 +1,76 @@
-.App {
-  text-align: center;
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body{
+  font-family: "poppins";
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.main-div{
+  width: 100vw;
+  height: 100vh;
+  background:linear-gradient(rgb(127, 193, 245), rgb(9, 22, 49));
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+  /* padding: 2rem; */
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.main-div h1{
+  font-size: 2rem;
+  color: white;
+  
+}
+.card{
+  width: 20rem;
+  height: 25rem;
+  background-color: aqua;
+  border: none;
+  border-radius: 55px 0 55px 0;
+  box-shadow: 10px -10px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  padding: 1.2rem;
+  /* margin: 10px; */
+}
+.inputBox{
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  margin: 5px;
+  gap: 10px;
+}
+.inputBox input{
+  border: none;
+  border-radius: 15px;
+  font-size: 1rem;
+  padding: 20px;
+  width: 70%;
+}
+.btn{
+  padding: 5px;
+  border-radius: 8px;
+  width: 5rem;
+  height: 3rem;
+  cursor: pointer;
+  background-color: rgb(104, 104, 255);
+  transition: all 0.3s;
+}
+.btn:hover{
+  background-color: rgb(43, 43, 136);
+}
+.info{
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
-
-.App-link {
-  color: #61dafb;
+.info h2{
+  font-size: 2rem;
+  font-weight: 500;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.info p{
+  font-size: 1.2rem;
+  font-weight: 300;
 }
