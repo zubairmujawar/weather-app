@@ -5,7 +5,8 @@ function App() {
   const [userInput, setUserInput] = useState("");
   const [cityName, setCityName] = useState([]);
   const [error, seterror] = useState(null)
-  const url = `https://weatherapi-com.p.rapidapi.com/current.json?q=${userInput}`;
+  const [loading, setLoading] = useState(true)
+  const url = `https://weatherapi-com.p.rapidapi.com/current.json?q=${userInput?userInput:'Mumbai'}`;
   const options = {
     method: "GET",
     headers: {
@@ -26,6 +27,8 @@ function App() {
     } catch {
       console.log("error in api");
       seterror("city name is not found")
+    }finally{
+      setLoading(false)
     }
   };
 
@@ -41,7 +44,7 @@ function App() {
         <div className="inputBox">
           <input
             type="text"
-            placeholder="delhi"
+            placeholder="City name"
             onChange={(e) => setUserInput(e.target.value)}
           />
           <button className="btn" onClick={handelSearch}>
@@ -51,21 +54,33 @@ function App() {
         { error &&
           <p>City name is not found</p>
         }
-        {cityName.length > 0 ? (
+        {loading ? (<h2>Loading...</h2>):(
           <div className="info">
+            
             <h2>{cityName[0].location.name?cityName[0].location.name:<h2>City name is not correct</h2>}</h2>
             {/* <h5>Tempreture{cityName[0].current.temp_c>20?<img src={img1} alt="img"/>:null}{cityName[0].current.temp_c}°C</h5> */}
+            <h5>Tempreture:<span className="tepm"> {cityName[0].current.temp_c}°C</span></h5>
+            <h5>Fahrenheit: <span className="tepm">{cityName[0].current.temp_f}°F</span></h5>
+            <h5>Humidity: <span className="tepm">{cityName[0].current.humidity}%</span></h5>
+            <h5>Wind degree: <span className="tepm">{cityName[0].current.wind_degree}</span> km/h</h5>
+            <h5>Region: <span className="tepm"> {cityName[0].location.region}</span></h5>
+          </div>
+        )}
+        {/* {cityName.length > 0 ? (
+          <div className="info">
+            
+            <h2>{cityName[0].location.name?cityName[0].location.name:<h2>City name is not correct</h2>}</h2>
             <h5>Tempreture: {cityName[0].current.temp_c}°C</h5>
+            <h5>Fahrenheit: {cityName[0].current.temp_f}°F</h5>
             <h5>Humidity: {cityName[0].current.humidity}</h5>
+            <h5>Region: {cityName[0].location.region}</h5>
             <h5>Local Time: {cityName[0].location.localtime}</h5>
           </div>
         ) : (
           <div className="info">
-            <h2>Mumbai</h2>
-            <h5>Tempreture: 21°C</h5>
-            <h5>Humidity: 45</h5>
+            <h2>Search City</h2>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );
