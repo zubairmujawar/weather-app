@@ -71,6 +71,10 @@ body {
   color: white;
   border: none;
 }
+#errormsg{
+  color: red;
+  font-size: 1.5rem;
+}
 .info {
   display: flex;
   flex-direction: column;

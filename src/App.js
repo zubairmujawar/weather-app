@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-import loadingimg from "../src/image/ZKZg.gif";
+import loadingimg from '../src/image/ZKZg.gif'
 
 function App() {
   const [userInput, setUserInput] = useState("");
@@ -20,7 +20,7 @@ function App() {
 
   useEffect(() => {
     fetchData(); // Fetch data on initial load
-  });
+  }, []); 
 
   const fetchData = async () => {
     try {
@@ -30,12 +30,14 @@ function App() {
       }
       const data = await response.json();
       setCityName([data]);
-      // console.log(data);
+      console.log(data);
     } catch {
-      // console.log("error in api");
+      console.log("error in api");
       seterror("city name is not found");
+      setUserInput('')
     } finally {
       setLoading(false);
+      
     }
   };
   const handelSearch = () => {
@@ -56,11 +58,9 @@ function App() {
             search
           </button>
         </div>
-        {error && <p>City name is not found</p>}
+        {error && <p id="errormsg">City name is not found</p>}
         {loading ? (
-          <h2>
-            <img src={loadingimg} alt="loading..." id="loadingimg" />
-          </h2>
+          <h2><img src={loadingimg} alt="loading..." id="loadingimg"/></h2>
         ) : (
           <div className="info">
             <h2>
