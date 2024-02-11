@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-import loadingimg from '../src/image/ZKZg.gif'
-
+import loadingimg from "../src/image/loading.gif";
 function App() {
   const [userInput, setUserInput] = useState("");
   const [cityName, setCityName] = useState([]);
@@ -17,10 +16,9 @@ function App() {
       "X-RapidAPI-Host": "weatherapi-com.p.rapidapi.com",
     },
   };
-
   useEffect(() => {
     fetchData(); // Fetch data on initial load
-  }, []); 
+  });
 
   const fetchData = async () => {
     try {
@@ -34,10 +32,9 @@ function App() {
     } catch {
       console.log("error in api");
       seterror("city name is not found");
-      setUserInput('')
+      setUserInput("");
     } finally {
       setLoading(false);
-      
     }
   };
   const handelSearch = () => {
@@ -60,7 +57,9 @@ function App() {
         </div>
         {error && <p id="errormsg">City name is not found</p>}
         {loading ? (
-          <h2><img src={loadingimg} alt="loading..." id="loadingimg"/></h2>
+          <h2>
+            <img src={loadingimg} alt="loading..." id="loadingimg" />
+          </h2>
         ) : (
           <div className="info">
             <h2>
