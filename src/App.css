@@ -71,9 +71,12 @@ body {
   color: white;
   border: none;
 }
-#errormsg{
+#errormsg {
   color: red;
   font-size: 1.5rem;
+}
+.loadingImg {
+  width: 100px;
 }
 .info {
   display: flex;

@@ -4,7 +4,7 @@ import loadingimg from "../src/image/loading.gif";
 function App() {
   const [userInput, setUserInput] = useState("");
   const [cityName, setCityName] = useState([]);
-  const [error, seterror] = useState(null);
+  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const url = `https://weatherapi-com.p.rapidapi.com/current.json?q=${
     userInput ? userInput : "Mumbai"
@@ -16,79 +16,72 @@ function App() {
       "X-RapidAPI-Host": "weatherapi-com.p.rapidapi.com",
     },
   };
-  useEffect(() => {
-    fetchData(); // Fetch data on initial load
-  });
 
   const fetchData = async () => {
+    setLoading(true);
     try {
       const response = await fetch(url, options);
       if (!response.ok) {
         throw new Error("City not found");
       }
       const data = await response.json();
-      setCityName([data]);
-      console.log(data);
-    } catch {
-      console.log("error in api");
-      seterror("city name is not found");
-      setUserInput("");
+      setCityName(data);
+      setError(null); // Reset error state if data is successfully fetched
+    } catch (error) {
+      console.error("Error in API:", error);
+      setError("City not found");
     } finally {
       setLoading(false);
     }
   };
-  const handelSearch = () => {
+
+  const handleSearch = () => {
     fetchData();
-    setUserInput("");
   };
+  
+  useEffect(() => {
+    fetchData();
+  }, []);
   return (
     <div className="main-div">
-      <h1>Wearther App</h1>
+      <h1>Weather App</h1>
       <div className="card">
         <div className="inputBox">
           <input
             type="text"
             placeholder="City name"
+            value={userInput}
             onChange={(e) => setUserInput(e.target.value)}
           />
-          <button className="btn" onClick={handelSearch}>
-            search
+          <button className="btn" onClick={handleSearch}>
+            Search
           </button>
         </div>
-        {error && <p id="errormsg">City name is not found</p>}
         {loading ? (
-          <h2>
-            <img src={loadingimg} alt="loading..." id="loadingimg" />
-          </h2>
+          <img src={loadingimg} alt="loading.." className="loadingImg" />
+        ) : error ? (
+          <h2 id="errormsg">{error}</h2>
         ) : (
           <div className="info">
-            <h2>
-              {cityName[0].location.name ? (
-                cityName[0].location.name
-              ) : (
-                <h2>City name is not correct</h2>
-              )}
-            </h2>
-            {/* <h5>Tempreture{cityName[0].current.temp_c>20?<img src={img1} alt="img"/>:null}{cityName[0].current.temp_c}°C</h5> */}
+            <h2>{cityName.location.name}</h2>
             <h5>
-              Tempreture:
-              <span className="tepm"> {cityName[0].current.temp_c}°C</span>
+              Temperature:{" "}
+              <span className="tepm">{cityName.current.temp_c}°C</span>
             </h5>
             <h5>
               Fahrenheit:{" "}
-              <span className="tepm">{cityName[0].current.temp_f}°F</span>
+              <span className="tepm">{cityName.current.temp_f}°F</span>
             </h5>
             <h5>
               Humidity:{" "}
-              <span className="tepm">{cityName[0].current.humidity}%</span>
+              <span className="tepm">{cityName.current.humidity}%</span>
             </h5>
             <h5>
               Wind degree:{" "}
-              <span className="tepm">{cityName[0].current.wind_degree}</span>
+              <span className="tepm">{cityName.current.wind_degree}</span>
             </h5>
             <h5>
-              Region:{" "}
-              <span className="tepm"> {cityName[0].location.region}</span>
+              Region: <span className="tepm">{cityName.location.region}</span>
             </h5>
           </div>
         )}
