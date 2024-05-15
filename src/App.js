@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import "./App.css";
 import loadingimg from "../src/image/loading.gif";
 function App() {
@@ -9,16 +9,25 @@ function App() {
   const url = `https://weatherapi-com.p.rapidapi.com/current.json?q=${
     userInput ? userInput : "Mumbai"
   }`;
-  const options = {
-    method: "GET",
+
+  const options = useMemo(() => {
+    return {method: "GET",
     headers: {
       "X-RapidAPI-Key": "33654bff97msh6b4b5a10e3fadbbp11484fjsn48637d73ceac",
       "X-RapidAPI-Host": "weatherapi-com.p.rapidapi.com",
-    },
-  };
+    }}; 
+  }, []);
 
-  const fetchData = async () => {
-    setLoading(true);
+  // const options = {
+  //   method: "GET",
+  //   headers: {
+  //     "X-RapidAPI-Key": "33654bff97msh6b4b5a10e3fadbbp11484fjsn48637d73ceac",
+  //     "X-RapidAPI-Host": "weatherapi-com.p.rapidapi.com",
+  //   },
+  // };
+
+  const fetchData = useCallback(async () => {
+    setLoading(true)
     try {
       const response = await fetch(url, options);
       if (!response.ok) {
@@ -33,15 +42,16 @@ function App() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [url, options]);
 
   const handleSearch = () => {
     fetchData();
   };
-  
+  // eslint-disable-next-line
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
+
   return (
     <div className="main-div">
       <h1>Weather App</h1>
