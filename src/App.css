@@ -95,3 +95,36 @@ body {
   font-size: 1.3rem;
   color: black;
 }
+
+/* Responsive styles */
+@media only screen and (max-width: 600px) {
+  .main-div {
+    padding: 20px; /* Add padding for better spacing */
+  }
+
+  .card {
+    width: 90%; /* Adjust width for smaller screens */
+  }
+
+  .inputBox input {
+    font-size: 0.8rem; /* Adjust font size for smaller screens */
+    padding: 10px; /* Adjust padding for smaller screens */
+  }
+
+  .btn {
+    padding: 8px; /* Adjust padding for smaller screens */
+    font-size: 0.9rem; /* Adjust font size for smaller screens */
+  }
+
+  .info h2 {
+    font-size: 1.8rem; /* Adjust font size for smaller screens */
+  }
+
+  .info p {
+    font-size: 1rem; /* Adjust font size for smaller screens */
+  }
+
+  .tepm {
+    font-size: 1.1rem; /* Adjust font size for smaller screens */
+  }
+}

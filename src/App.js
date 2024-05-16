@@ -26,27 +26,45 @@ function App() {
   //   },
   // };
 
+  // const fetchData = useCallback(async () => {
+  //   setLoading(true)
+  //   try {
+  //     const response = await fetch(url, options);
+  //     if (!response.ok) {
+  //       throw new Error("City not found");
+  //     }
+  //     const data = await response.json();
+  //     setCityName(data);
+  //     setError(null); // Reset error state if data is successfully fetched
+  //   } catch (error) {
+  //     console.error("Error in API:", error);
+  //     setError("City not found");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // }, [url, options]);
+
   const fetchData = useCallback(async () => {
-    setLoading(true)
+    setLoading(true);
     try {
       const response = await fetch(url, options);
-      if (!response.ok) {
-        throw new Error("City not found");
-      }
       const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error.message); // Assuming the API returns an error object with a message property
+      }
       setCityName(data);
       setError(null); // Reset error state if data is successfully fetched
     } catch (error) {
       console.error("Error in API:", error);
-      setError("City not found");
+      setError(error.message === "City not found" ? "City not found" : "An error occurred");
     } finally {
       setLoading(false);
     }
   }, [url, options]);
-
-  const handleSearch = () => {
-    fetchData();
-  };
+  
+  // const handleSearch = () => {
+  //   fetchData();
+  // };
   // eslint-disable-next-line
   useEffect(() => {
     fetchData();
@@ -63,9 +81,7 @@ function App() {
             value={userInput}
             onChange={(e) => setUserInput(e.target.value)}
           />
-          <button className="btn" onClick={handleSearch}>
-            Search
-          </button>
+          {/* <button className="btn" onClick={handleSearch}>Search</button> */}
         </div>
         {loading ? (
           <img src={loadingimg} alt="loading.." className="loadingImg" />
